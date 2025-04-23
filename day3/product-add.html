@@ -21,6 +21,7 @@
         <div>가격 : <input placeholder="가격" v-model="info.price"></div>
         <div>재고 : <input placeholder="재고" v-model="info.stock"></div>
         <div>종류 : <input placeholder="종류" v-model="info.category"></div>
+        <div>제품 사진 : <input type="file" @change="onFileChange"></div>
         <div>
             <button @click="fnAdd">{{productId ? "수정" : "등록"}}</button>
             <a href="product-list.html"><button>돌아가기</button></a>
@@ -39,7 +40,8 @@
                     stock:"",
                     category:""
                 },
-                productId: ""
+                productId: "",
+                imageFile: null
             };
         },
         methods: {
@@ -52,7 +54,7 @@
                         "Content-type" : "application/json"
                     },
                     body : JSON.stringify(self.info)
-                })
+                    })
                     .then( res => res.json())
                     .then( data => {
                         console.log(data);
@@ -90,6 +92,9 @@
                         console.log(data.info);
                         self.info = data.info;
                     })
+            },
+            onFileChange(event) {
+                this.imageFile = event.target.files[0];
             },
         },
         mounted() {
